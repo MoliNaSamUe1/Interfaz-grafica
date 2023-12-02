@@ -18,6 +18,7 @@ public class Interfaz_Grafica {
         System.out.println("Hola mundo");
         System.out.println("Samuel");
         System.out.println("chao");
+        System.out.println("Adios");
     }
     
 }
