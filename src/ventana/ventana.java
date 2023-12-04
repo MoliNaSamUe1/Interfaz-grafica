@@ -77,11 +77,25 @@ public class ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dimension=Integer.parseInt(cajaTexto.getText());
+                String numCadena,a; 
+                int digitos,numero; 
                 int matriz[][]=new int[dimension][dimension];
                 for (int i = 0; i < matriz.length; i++) {
                     for (int j = 0; j < matriz[0].length; j++) {
                         matriz[i][j]=(int)(Math.random()*999);
-                        areaTexto.append(String.valueOf("    "+matriz[i][j]));
+                        numero=matriz[i][j];
+                        numCadena= Integer. toString(numero);
+                        digitos=numCadena.length();
+                        if(digitos==1){ 
+                            areaTexto.append(String.valueOf("       "+matriz[i][j]));
+                        }
+                        else if(digitos==2){ 
+                            areaTexto.append(String.valueOf("    "+matriz[i][j]));
+                        }
+                        else{  
+                            areaTexto.append(String.valueOf("  "+matriz[i][j]));
+                        }
+                        
 
                     }
                     areaTexto.append(String.valueOf("\n"));
