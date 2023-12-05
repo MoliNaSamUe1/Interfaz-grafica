@@ -4,6 +4,8 @@ package ventana;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel; //Importo el paquete de las etiquetas
@@ -64,7 +66,7 @@ public class ventana extends JFrame {
         boton1.setEnabled(true); //hago que se puedaclickear o no
         panel.add(boton1);  //Agrego boton al panel
         //Boton 2
-        boton2 = new JButton("Reiniciar");
+        boton2 = new JButton("Limpiar");
         boton2.setBounds(350,40,100,30);  //tamano y ubicacion del boton
         boton2.setEnabled(false); //hago que se puedaclickear o no
         panel.add(boton2);  //Agrego boton a el panel
@@ -77,34 +79,38 @@ public class ventana extends JFrame {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                dimension=Integer.parseInt(cajaTexto.getText());
-                String numCadena,a; 
-                int digitos,numero; 
-                int matriz[][]=new int[dimension][dimension];
-                for (int i = 0; i < matriz.length; i++) {
-                    for (int j = 0; j < matriz[0].length; j++) {
-                        matriz[i][j]=(int)(Math.random()*999);
-                        numero=matriz[i][j];
-                        numCadena= Integer. toString(numero);
-                        digitos=numCadena.length();
-                        if(digitos==1){ 
-                            areaTexto.append(String.valueOf("       "+matriz[i][j]));
-                        }
-                        else if(digitos==2){ 
-                            areaTexto.append(String.valueOf("    "+matriz[i][j]));
-                        }
-                        else{  
-                            areaTexto.append(String.valueOf("  "+matriz[i][j]));
-                        }
+                if (!cajaTexto.getText().isEmpty()){
+                    dimension=Integer.parseInt(cajaTexto.getText());
+                    String numCadena,a; 
+                    int digitos,numero;
+                    if ((dimension>=3)&&(dimension<=10)){
+                        int matriz[][]=new int[dimension][dimension];
+                        for (int i = 0; i < matriz.length; i++) {
+                            for (int j = 0; j < matriz[0].length; j++) {
+                                matriz[i][j]=(int)(Math.random()*999);
+                                numero=matriz[i][j];
+                                numCadena= Integer. toString(numero);
+                                digitos=numCadena.length();
+                                if(digitos==1){ 
+                                    areaTexto.append(String.valueOf("       "+matriz[i][j]));
+                                }
+                                else if(digitos==2){ 
+                                    areaTexto.append(String.valueOf("    "+matriz[i][j]));
+                                }
+                                else{  
+                                    areaTexto.append(String.valueOf("  "+matriz[i][j]));
+                                }
                         
 
+                            }
+                            areaTexto.append(String.valueOf("\n"));
+                        }
+                        boton2.setEnabled(true); //boton de reiniciar activado
+                        boton1.setEnabled(false); //boton operar desactivado
+                        cajaTexto.setEnabled(false); //desactivo caja de texto
+                        areaTexto.setEnabled(true);
                     }
-                    areaTexto.append(String.valueOf("\n"));
                 }
-                boton2.setEnabled(true);
-                boton1.setEnabled(false);
-                cajaTexto.setEnabled(false);
-                areaTexto.setEnabled(true);
             }
         };
         boton1.addActionListener(oyenteDeAccion);
@@ -131,6 +137,33 @@ public class ventana extends JFrame {
         cajaTexto = new JTextField(); //instancio la caja de texto
         cajaTexto.setBounds(80,40,100,30); //tamano y ubicacion de la caja
         panel.add(cajaTexto);  //La agrego al panel
+        eventoCajaTexto();
+    }
+    
+    private void eventoCajaTexto(){
+        KeyListener eventoTeclado=new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char car=e.getKeyChar();
+                if (car<'0'||car>'9'){
+                    e.consume();
+                }
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        };
+        
+        cajaTexto.addKeyListener(eventoTeclado);
+        
     }
     
     private void colocarAreasDeTexto(){
