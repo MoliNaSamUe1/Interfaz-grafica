@@ -1,18 +1,24 @@
-import java.util.Scanner;
+import java.util.*;
 public class Principal {
     public static void main(String[] args) {
-        System.out.println("Sucesion de fibonacci");
-        System.out.print("Coloque el numero de terminos de fibonacci: ");
-        Scanner teclado = new Scanner(System.in);
-        int i = teclado.nextInt();
-        int temp ,sig =1, ant = 0;
-        for (int x = 0 ; x<i ; ++x) {
-            System.out.print(ant +", ");
-            temp = sig;
-            sig = sig +ant;
-            ant = temp;
+        
+        // Creamos una matriz de 3x3 para probar las funciones
+        int matriz[][] = new int[3][3];
+        for(int i = 0; i<matriz.length ; ++i) {
+            for(int j = 0 ; j<matriz.length ; ++j) {
+                matriz[i][j] = (int) (Math.random()*1000);
+            }
         }
-        System.out.println();
+        for(int i = 0; i<matriz.length ; ++i) {
+            for(int j = 0 ; j<matriz.length ; ++j) {
+                System.out.printf("%-3d" + "  ",matriz[i][j]);
+            }
+            System.out.println("");
+        }
+        
+        // Se prueuba la funcion
+        System.out.println("\nRESULTADO DE LA FUNCION");
+        System.out.println(Secundario.Algoritmo3(matriz));
     }
     
 }
