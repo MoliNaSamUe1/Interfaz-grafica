@@ -1,6 +1,6 @@
 
 import java.util.Scanner;
-
+import java.math.BigInteger;
 
 
 public class Secundario {
@@ -89,8 +89,15 @@ public class Secundario {
         OrdenarVector(PrimerColumna);
         OrdenarVector(UltimaColumna);
         
-        // Retornamos la potencia del menor numero de la primera columna elevada al mayor numero de la ultima columna
-        return ( Math.pow(PrimerColumna[tamaño-1], UltimaColumna[0]) + "");
+        
+        // Creamos un objeto de tipo BigInterger que pueda almacenar la potencia
+        BigInteger base = BigInteger.valueOf(PrimerColumna[tamaño-1]);
+        BigInteger resultado = base.pow(UltimaColumna[0]);
+        
+        // Convertimos el resultado en String y lo retornamos
+        
+        return resultado.toString();
+        
     }
     
      public static void Algoritmo4(){
