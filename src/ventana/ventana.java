@@ -69,6 +69,7 @@ public class ventana extends JFrame {
         boton2.setEnabled(false); //hago que se puedaclickear o no
         panel.add(boton2);  //Agrego boton a el panel
         eventoBotonOperar();
+        eventoBotonReiniciar();
     }    
     private void eventoBotonOperar(){    
         //Agrego el evento de tipo ActionListener
@@ -100,9 +101,25 @@ public class ventana extends JFrame {
                     }
                     areaTexto.append(String.valueOf("\n"));
                 }
+                boton2.setEnabled(true);
+                boton1.setEnabled(false);
             }
         };
         boton1.addActionListener(oyenteDeAccion);
+    }
+    
+    private void eventoBotonReiniciar(){
+        //Agrego el avento de tipo ActionListener
+        ActionListener oyenteDeAccion2=new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cajaTexto.setText(null);
+                areaTexto.setText(null);
+                boton1.setEnabled(true);
+                boton2.setEnabled(false);
+            }
+        };
+        boton2.addActionListener(oyenteDeAccion2);
     }
     
     private void colocarCajasDeTexto(){
