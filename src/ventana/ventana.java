@@ -103,6 +103,8 @@ public class ventana extends JFrame {
                 }
                 boton2.setEnabled(true);
                 boton1.setEnabled(false);
+                cajaTexto.setEnabled(false);
+                areaTexto.setEnabled(true);
             }
         };
         boton1.addActionListener(oyenteDeAccion);
@@ -117,6 +119,8 @@ public class ventana extends JFrame {
                 areaTexto.setText(null);
                 boton1.setEnabled(true);
                 boton2.setEnabled(false);
+                cajaTexto.setEnabled(true);
+                areaTexto.setEnabled(false);
             }
         };
         boton2.addActionListener(oyenteDeAccion2);
