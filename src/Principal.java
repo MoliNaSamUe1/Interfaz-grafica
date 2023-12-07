@@ -18,7 +18,6 @@ public class Principal {
         
         // Se prueuba la funcion
         System.out.println("\nRESULTADO DE LA FUNCION");
-        System.out.println(Secundario.Algoritmo3(matriz));
+        System.out.println(Secundario.Algoritmo4(matriz));
     }
-    
 }

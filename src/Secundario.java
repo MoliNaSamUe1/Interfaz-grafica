@@ -89,7 +89,7 @@ public class Secundario {
         OrdenarVector(PrimerColumna);
         OrdenarVector(UltimaColumna);
         
-        
+
         // Creamos un objeto de tipo BigInterger que pueda almacenar la potencia
         BigInteger base = BigInteger.valueOf(PrimerColumna[tamaño-1]);
         BigInteger resultado = base.pow(UltimaColumna[0]);
@@ -100,24 +100,37 @@ public class Secundario {
         
     }
     
-     public static void Algoritmo4(){
-        
-        System.out.println("Sucesion de fibonacci");
-        System.out.print("Coloque el numero de terminos de fibonacci: ");
-        Scanner teclado = new Scanner(System.in);
-        int i = teclado.nextInt();
-        int temp ,sig =1, ant = 0;
-        for (int x = 0 ; x<i ; ++x) {
-            if (x < i-1) {
-                System.out.print(ant +", ");
-                temp = sig;
-                sig = sig +ant;
-                ant = temp;
-            }
-            else {
-                System.out.print(ant);
+     public static String Algoritmo4(int matriz[][]){
+         
+         // Sacamos un arreglo con todos los numeros de la matriz
+        int i = 0;
+        int vect[] = new int[matriz.length * matriz.length];
+        for (int x = 0 ; x<matriz.length ; ++x) {
+            for (int y = 0 ; y<matriz.length ; ++y) {
+                vect[i] = matriz[x][y];
+                i += 1;
             }
         }
-        System.out.println();
+        
+        // oredenamos el arreglo para sacar el numero mayor de la matriz
+         OrdenarVector(vect);
+         int mayorNum = vect[0];
+         System.out.println(mayorNum);
+         // Hacemos la sucesion de fibonacci hasta el mayor numero de la matriz
+         int temp ,sig =1, ant = 0;
+         String valor = "";
+        while(ant <= mayorNum) {
+            if (sig > mayorNum) {
+                valor += ant;
+            }
+            else {
+            valor += ant +", ";
+            }
+            temp = sig;
+            sig = sig +ant;
+            ant = temp;
+        }
+        return valor;
     }
+        
 }
