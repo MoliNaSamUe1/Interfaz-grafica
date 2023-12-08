@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.util.Scanner;
+import java.math.BigInteger;
 
 public class ventana extends JFrame {
     //Componentes
@@ -62,9 +64,9 @@ public class ventana extends JFrame {
     private void colocarEtiquetas(){   
         //Etiquetas
         etiqueta=new JLabel(); //Se crea una etiqueta
-        etiqueta.setText("Tamano");  //Le agrego texto a la etiqueta
-        etiqueta.setBounds(100,1,50,30);
-        etiqueta.setHorizontalAlignment(SwingConstants.CENTER); //Establecemos el texto en el centro de la etiqueta
+        etiqueta.setText("Introduzca la dimension de la matriz:");  //Le agrego texto a la etiqueta
+        etiqueta.setBounds(40,1,230,30);
+        //etiqueta.setHorizontalAlignment(SwingConstants.CENTER); //Establecemos el texto en el centro de la etiqueta
         panel.add(etiqueta); //Agregamos la etiqueta al panel
         
         etiqueta2=new JLabel(); //Se crea una etiqueta
@@ -113,7 +115,7 @@ public class ventana extends JFrame {
                 if (!cajaTexto.getText().isEmpty()){
                     int multi;
                     dimension=Integer.parseInt(cajaTexto.getText());
-                    String numCadena,a; 
+                    String numCadena,texto_alg1,texto_alg2,texto_alg3,texto_alg4;  
                     int digitos,numero;
                     if ((dimension>=3)&&(dimension<=10)){
                         matriz=new int[dimension][dimension];
@@ -137,10 +139,22 @@ public class ventana extends JFrame {
                             }
                             areaTexto.append(String.valueOf("\n"));
                         }
+                        texto_alg1=Algoritmo1(matriz);
+                        texto_alg2=Algoritmo2(matriz);
+                        texto_alg3=Algoritmo3(matriz);
+                        texto_alg4=Algoritmo4(matriz);
+                        cajaTexto2.setText(texto_alg1);//Agrego algoritmo 1 a la caja de texto
+                        cajaTexto3.setText(texto_alg2);
+                        cajaTexto4.setText(texto_alg3);
+                        cajaTexto5.setText(texto_alg4);
                         boton2.setEnabled(true); //boton de reiniciar activado
                         boton1.setEnabled(false); //boton operar desactivado
                         cajaTexto.setEnabled(false); //desactivo caja de texto
                         areaTexto.setEnabled(true);
+                        cajaTexto2.setEnabled(true);
+                        cajaTexto3.setEnabled(true);
+                        cajaTexto4.setEnabled(true);
+                        cajaTexto5.setEnabled(true);
                     }
                 }
             }
@@ -154,10 +168,18 @@ public class ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cajaTexto.setText(null);
+                cajaTexto2.setText(null);
+                cajaTexto3.setText(null);
+                cajaTexto4.setText(null);
+                cajaTexto5.setText(null);
                 areaTexto.setText(null);
                 boton1.setEnabled(true);
                 boton2.setEnabled(false);
                 cajaTexto.setEnabled(true);
+                cajaTexto2.setEnabled(false);
+                cajaTexto3.setEnabled(false);
+                cajaTexto4.setEnabled(false);
+                cajaTexto5.setEnabled(false);
                 areaTexto.setEnabled(false);
             }
         };
@@ -172,19 +194,19 @@ public class ventana extends JFrame {
         eventoCajaTexto();
         
         cajaTexto2 = new JTextField();
-        cajaTexto2.setBounds(550,290,100,30);
+        cajaTexto2.setBounds(550,290,170,30);
         panel.add(cajaTexto2);
         
         cajaTexto3 = new JTextField();
-        cajaTexto3.setBounds(550,360,100,30);
+        cajaTexto3.setBounds(550,360,170,30);
         panel.add(cajaTexto3);
         
         cajaTexto4 = new JTextField();
-        cajaTexto4.setBounds(550,430,100,30);
+        cajaTexto4.setBounds(550,430,170,30);
         panel.add(cajaTexto4);
         
         cajaTexto5 = new JTextField();
-        cajaTexto5.setBounds(550,500,100,30);
+        cajaTexto5.setBounds(550,500,170,30);
         panel.add(cajaTexto5);
     }
     
@@ -219,5 +241,130 @@ public class ventana extends JFrame {
         areaTexto.setBounds(200,100,300,200);
         //areaTexto.setText("Aqui estoy");
         panel.add(areaTexto);
+    }
+    public static void OrdenarVector(int vect[]) {
+        // Definimos una funcion que ordene un vector
+        int temp;
+        int tamaño = vect.length;
+        for (int i = 0 ; i<(tamaño -1) ; ++i) {
+            for (int j = 0 ; j<(tamaño-1); ++j) {
+                if (vect[j] < vect[j+1]) {
+                    temp = vect[j];
+                    vect[j] =  vect[j+1];
+                    vect[j+1] = temp;
+                }
+            } 
+        }
+    }
+    public static String Algoritmo1(int matriz[][]) {
+        
+        // Creamos la Diagonal Principal
+            int tamaño = matriz.length;
+            int DiagPrincipal[] = new int[tamaño];
+            for (int i = 0 ; i<tamaño ; ++i) {
+                for (int j = 0 ; j<tamaño ; ++j) {
+                    if (i == j) {
+                        DiagPrincipal[i] = matriz[i][j];
+                    }
+                }
+            }
+        // Ordenamos la Diagonal Principal de mayor a menor
+        OrdenarVector(DiagPrincipal);
+            
+        // Mostramos por pantalla la Diagonal Principal ordenada de mayor a menor
+        
+        String texto = "";
+        for (int i = 0 ; i<(tamaño) ; ++i) {
+            if (i != tamaño-1) {
+                texto += DiagPrincipal[i] + ", ";
+            }
+            else {
+                texto += DiagPrincipal[i];
+            }
+        }
+        return texto;
+    }
+    
+    public static String Algoritmo2(int matriz[][]) {
+        
+        // Creamos la Diagonal Secundaria y la guardamos en una variable
+        int tamaño = matriz.length;
+        int DiagSecundaria[] = new int[tamaño];
+        for (int i = 0 ; i<tamaño ; ++i) {
+            for (int j = 0 ; j<tamaño ; ++j) {
+                if (i +j== tamaño - 1) {
+                     DiagSecundaria[i] = matriz[i][j];
+                }
+            }
+        }
+        
+        // Se saca el promedio de la Diagonal secundaria
+        double prom, suma = 0;
+        for (int i = 0; i<tamaño ;++i) {
+            suma += DiagSecundaria[i];    
+        }
+        prom = suma/tamaño;
+        
+        // Se retorna el promedio como String
+        
+        return (prom + "");
+    }
+    
+    public static String Algoritmo3(int matriz[][]){
+        
+        // Definimos la Primera y ultima Columna en variables que guarden los arreglos
+        int tamaño = matriz.length;
+        int PrimerColumna[] = new int[tamaño];
+        int UltimaColumna[] = new int[tamaño];
+        for (int i = 0; i<tamaño ; ++i) {
+            PrimerColumna[i] = matriz[i][0];
+            UltimaColumna[i] = matriz[i][tamaño-1];
+        }
+        
+        // Ordenamos de mayor a menor cada columna
+        OrdenarVector(PrimerColumna);
+        OrdenarVector(UltimaColumna);
+        
+
+        // Creamos un objeto de tipo BigInterger que pueda almacenar la potencia
+        BigInteger base = BigInteger.valueOf(PrimerColumna[tamaño-1]);
+        BigInteger resultado = base.pow(UltimaColumna[0]);
+        
+        // Convertimos el resultado en String y lo retornamos
+        
+        return resultado.toString();
+        
+    }
+    
+     public static String Algoritmo4(int matriz[][]){
+         
+         // Sacamos un arreglo con todos los numeros de la matriz
+        int i = 0;
+        int vect[] = new int[matriz.length * matriz.length];
+        for (int x = 0 ; x<matriz.length ; ++x) {
+            for (int y = 0 ; y<matriz.length ; ++y) {
+                vect[i] = matriz[x][y];
+                i += 1;
+            }
+        }
+        
+        // oredenamos el arreglo para sacar el numero mayor de la matriz
+         OrdenarVector(vect);
+         int mayorNum = vect[0];
+         // Hacemos la sucesion de fibonacci hasta el mayor numero de la matriz
+         int temp ,sig =1, ant = 0;
+         String valor = "";
+        while(ant <= mayorNum) {
+            if (sig > mayorNum) {
+                valor += ant;
+            }
+            else {
+            valor += ant +", ";
+            }
+            temp = sig;
+            sig = sig +ant;
+            ant = temp;
+        }
+        return valor;
     }
 }
