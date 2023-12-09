@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -134,23 +136,28 @@ public class Ventana extends JFrame{
         cajaTexto = new JTextField(); // creamos el objeto de caja de texto
         cajaTexto.setBounds(290, 25, 100, 35); // establecemos la posicion y dimension de la caja de texto
         panel.add(cajaTexto);
+        eventoCajaDeTexto();
         
         
      // Caja de texto de los algortimos   
         cajaTexto1 = new JTextField();
         cajaTexto1.setBounds(480, 400, 250, 35);
+        cajaTexto1.setFont(new Font("arial" , Font.PLAIN , 15));
         panel.add(cajaTexto1);
         
         cajaTexto2 = new JTextField();
         cajaTexto2.setBounds(480, 500, 250, 35);
+        cajaTexto2.setFont(new Font("arial" , Font.PLAIN , 15));
         panel.add(cajaTexto2);
         
         cajaTexto3 = new JTextField();
         cajaTexto3.setBounds(50, 650, 680, 35);
+        cajaTexto3.setFont(new Font("arial" , Font.PLAIN , 15));
         panel.add(cajaTexto3);
      
         cajaTexto4 = new JTextField();
         cajaTexto4.setBounds(480, 750, 250, 35);
+        cajaTexto4.setFont(new Font("arial" , Font.PLAIN , 15));
         panel.add(cajaTexto4);
     }
     
@@ -175,32 +182,39 @@ public class Ventana extends JFrame{
         ActionListener oyenteDeAccion = new ActionListener() {  // creamos el objeto evento (ActionListener) que es el evento asociado al boton
             @Override
             public void actionPerformed(ActionEvent e) {
-                int tamaño = Integer.parseInt(cajaTexto.getText());
-                String mostrar = "";
-                // Creamos la matriz 
-                matriz = new int[tamaño][tamaño];
-                for(int i = 0; i<matriz.length ; ++i) {
-                    for(int j = 0 ; j<matriz.length ; ++j) {
-                        matriz[i][j] = (int) (Math.random()*1000);
-                        mostrar += String.format("%4d", matriz[i][j]);
+                if (!cajaTexto.getText().isEmpty() && 3<= Integer.parseInt(cajaTexto.getText())  && Integer.parseInt(cajaTexto.getText()) <= 10) {
+                    int tamaño = Integer.parseInt(cajaTexto.getText());
+                    String mostrar = "";
+                    // Creamos la matriz 
+                    matriz = new int[tamaño][tamaño];
+                    for(int i = 0; i<matriz.length ; ++i) {
+                        for(int j = 0 ; j<matriz.length ; ++j) {
+                            matriz[i][j] = (int) (Math.random()*1000);
+                            mostrar += String.format("%4d", matriz[i][j]);
+                        }
+                        mostrar += "\n";
                     }
-                    mostrar += "\n";
-                }
-                textoEstilizado.setText(mostrar); // Pasamos los datos de la matriz al textpane
-                cajaTexto.setEditable(false); // deshabilitamos la caja de texto que pide la dimension de la matriz
-                boton1.setEnabled(false); // deshabilitamos el boton operar 
-                boton2.setEnabled(true); // deshabilitamos el boton limpiar
+                    textoEstilizado.setText(mostrar); // Pasamos los datos de la matriz al textpane
+                    cajaTexto.setEditable(false); // deshabilitamos la caja de texto que pide la dimension de la matriz
+                    boton1.setEnabled(false); // deshabilitamos el boton operar 
+                    boton2.setEnabled(true); // deshabilitamos el boton limpiar
                 
-                // Invocamos los algoritmos que realizan las 4 funciones con los datos de la matriz
-                cajaTexto1.setText(Funciones.Algoritmo1(matriz)); 
-                cajaTexto1.setCaretPosition(0);                   // esto hace que el puntero de la caja de texto se quede en el inicio
-                cajaTexto2.setText(Funciones.Algoritmo2(matriz));
-                cajaTexto2.setCaretPosition(0);
-                cajaTexto3.setText(Funciones.Algoritmo3(matriz));
-                cajaTexto3.setCaretPosition(0);
-                cajaTexto4.setText(Funciones.Algoritmo4(matriz));
-                cajaTexto4.setCaretPosition(0);
+                    // Invocamos los algoritmos que realizan las 4 funciones con los datos de la matriz
+                    cajaTexto1.setText(Funciones.Algoritmo1(matriz)); 
+                    cajaTexto1.setCaretPosition(0);                   // esto hace que el puntero de la caja de texto se quede en el inicio
+                    cajaTexto2.setText(Funciones.Algoritmo2(matriz));
+                    cajaTexto2.setCaretPosition(0);
+                    cajaTexto3.setText(Funciones.Algoritmo3(matriz));
+                    cajaTexto3.setCaretPosition(0);
+                    cajaTexto4.setText(Funciones.Algoritmo4(matriz));
+                    cajaTexto4.setCaretPosition(0);
+                }
+                
+                else {
+                    textoEstilizado.setText("Coloque un valor que se encuentre entre el 3 y 10, pudiendo incluir los extremos");
+                }
             }
+            
         };
         
         
@@ -229,6 +243,29 @@ public class Ventana extends JFrame{
         
         
         boton2.addActionListener(oyenteDeAccion);
+    }
+    
+    private void eventoCajaDeTexto() {
+        
+        KeyListener eventoTeclado = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        };
+        cajaTexto.addKeyListener(eventoTeclado);
     }
 }
 
